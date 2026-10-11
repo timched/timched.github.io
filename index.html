@@ -1,218 +1,28 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0078d7">
-  <meta name="description" content="The personal website of Timched — projects, experiments, Linux, Android, and open source.">
-  <title>Timched — Personal Site</title>
-  <style>
-    :root {
-      color-scheme: light;
-      --blue: #0078d7;
-      --deep-blue: #005a9e;
-      --ink: #242424;
-      --muted: #666;
-      --paper: #f3f3f3;
-      --white: #fff;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font: 16px/1.55 "Segoe UI", Tahoma, Arial, sans-serif;
-    }
-    a { color: inherit; }
-    .topbar {
-      min-height: 58px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 0 max(5vw, 20px);
-      background: #fff;
-      border-bottom: 1px solid #ddd;
-    }
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -.4px;
-    }
-    .mark {
-      display: grid;
-      grid-template-columns: repeat(2, 11px);
-      grid-template-rows: repeat(2, 11px);
-      gap: 2px;
-      transform: skewY(-5deg);
-    }
-    .mark i:nth-child(1) { background: #f35325; }
-    .mark i:nth-child(2) { background: #81bc06; }
-    .mark i:nth-child(3) { background: #05a6f0; }
-    .mark i:nth-child(4) { background: #ffba08; }
-    nav { display: flex; gap: 24px; flex-wrap: wrap; }
-    nav a { text-decoration: none; font-size: 14px; }
-    nav a:hover, nav a:focus-visible { color: var(--blue); text-decoration: underline; }
-    .hero {
-      background: var(--blue);
-      color: white;
-      padding: clamp(54px, 9vw, 110px) max(7vw, 22px) 74px;
-      overflow: hidden;
-      position: relative;
-    }
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 330px;
-      height: 330px;
-      border: 54px solid rgba(255,255,255,.09);
-      right: -90px;
-      top: -115px;
-      transform: rotate(18deg);
-      pointer-events: none;
-    }
-    .hero-inner { max-width: 1100px; margin: auto; position: relative; z-index: 1; }
-    .eyebrow { margin: 0 0 12px; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; font-weight: 700; opacity: .85; }
-    h1 { margin: 0; font-size: clamp(42px, 7vw, 76px); font-weight: 300; line-height: 1.04; letter-spacing: -2px; }
-    .hero p:not(.eyebrow) { max-width: 650px; margin: 24px 0 30px; font-size: clamp(17px, 2.2vw, 22px); font-weight: 300; }
-    .button {
-      display: inline-block; padding: 11px 20px; background: white; color: #005a9e;
-      text-decoration: none; font-weight: 600; border: 2px solid white; transition: .15s ease;
-    }
-    .button:hover { background: transparent; color: white; }
-    main { max-width: 1100px; margin: 0 auto; padding: 46px 22px 70px; }
-    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 15px; margin-bottom: 20px; }
-    h2 { margin: 0; font-size: clamp(26px, 4vw, 36px); font-weight: 300; letter-spacing: -.7px; }
-    .section-heading p { margin: 0; color: var(--muted); font-size: 14px; }
-    .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-    .tile {
-      min-height: 210px; padding: 24px; color: white; text-decoration: none; display: flex;
-      flex-direction: column; justify-content: space-between; transition: transform .15s ease, filter .15s ease;
-      outline-offset: 3px;
-    }
-    .tile:hover { transform: translateY(-3px); filter: brightness(1.07); }
-    .tile .symbol { font-size: 35px; line-height: 1; font-weight: 300; }
-    .tile h3 { margin: 28px 0 5px; font-size: 22px; font-weight: 400; }
-    .tile p { margin: 0; font-size: 14px; opacity: .93; }
-    .t-blue { background: #0078d7; }
-    .t-purple { background: #744da9; }
-    .t-green { background: #107c10; }
-    .t-orange { background: #da3b01; }
-    .t-teal { background: #008272; }
-    .t-dark { background: #333; }
-    .about {
-      margin-top: 52px; padding: 30px; background: white; border-left: 5px solid var(--blue);
-      display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
-    }
-    .about h2 { margin-bottom: 10px; }
-    .about p { margin: 0; color: #4b4b4b; }
-    .chips { display: flex; flex-wrap: wrap; align-content: start; gap: 8px; }
-    .chips span { background: #e8f3fc; color: #005a9e; padding: 7px 11px; font-size: 13px; }
-    footer {
-      background: #e5e5e5; padding: 22px max(5vw, 20px); display: flex; flex-wrap: wrap;
-      justify-content: space-between; gap: 12px; color: #555; font-size: 13px;
-    }
-    footer a { color: #333; }
-    @media (max-width: 700px) {
-      .topbar { align-items: flex-start; flex-direction: column; padding-top: 14px; padding-bottom: 14px; gap: 10px; }
-      nav { gap: 16px; }
-      .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .tile { min-height: 185px; padding: 18px; }
-      .about { grid-template-columns: 1fr; padding: 23px; }
-    }
-    @media (max-width: 430px) {
-      .tiles { grid-template-columns: 1fr; }
-      .tile { min-height: 155px; }
-      h1 { letter-spacing: -1px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
-    }
-  </style>
-</head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#4285f4">
+<meta name="description" content="Timched's projects, experiments, and browser-based duckOS demo.">
+<title>Timched — Projects & Experiments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#4285f4;--red:#ea4335;--yellow:#fbbc05;--green:#34a853;--ink:#202124;--muted:#5f6368;--bg:#f8f9fa;--line:#dadce0;--shadow:0 2px 6px #20212418,0 1px 2px #20212410}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Roboto,Arial,sans-serif}a{color:inherit}.top{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 max(5vw,22px);background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:5}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-size:21px;font-weight:500;letter-spacing:-.5px}.gmark{display:flex;gap:3px}.gmark i{display:block;width:8px;height:25px;border-radius:4px}.gmark i:nth-child(1){background:var(--blue)}.gmark i:nth-child(2){background:var(--red)}.gmark i:nth-child(3){background:var(--yellow)}.gmark i:nth-child(4){background:var(--green)}nav{display:flex;gap:26px}nav a{text-decoration:none;color:var(--muted);font-size:14px}nav a:hover{color:var(--blue)}.hero{background:#e8f0fe;padding:74px max(6vw,24px) 78px}.hero-inner{max-width:1100px;margin:auto}.kicker{color:#1967d2;text-transform:uppercase;letter-spacing:1.7px;font-size:12px;font-weight:700}.hero h1{font-size:clamp(42px,7vw,72px);line-height:1.08;letter-spacing:-2.5px;font-weight:400;margin:12px 0 18px}.hero p{max-width:690px;color:#3c4043;font-size:19px;font-weight:300}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border-radius:4px;text-decoration:none;font-size:14px;font-weight:500;box-shadow:var(--shadow);transition:box-shadow .18s,transform .18s}.btn:hover{box-shadow:0 4px 12px #20212424;transform:translateY(-1px)}.primary{background:var(--blue);color:#fff}.secondary{background:#fff;color:#1967d2}main{max-width:1100px;margin:auto;padding:52px 22px 72px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:14px;margin-bottom:22px}.section-head h2{margin:0;font-size:30px;font-weight:400;letter-spacing:-.6px}.section-head p{margin:0;color:var(--muted);font-size:14px}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.card{background:white;border:1px solid #e8eaed;border-radius:8px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;min-height:250px;box-shadow:0 1px 2px #20212408;transition:box-shadow .2s,transform .2s}.card:hover{box-shadow:0 6px 20px #20212418;transform:translateY(-3px)}.card-top{height:8px;background:var(--blue)}.card:nth-child(2) .card-top{background:var(--green)}.card:nth-child(3) .card-top{background:var(--yellow)}.card:nth-child(4) .card-top{background:var(--red)}.card:nth-child(5) .card-top{background:#a142f4}.card:nth-child(6) .card-top{background:#00acc1}.card-body{padding:23px;display:flex;flex-direction:column;align-items:flex-start;flex:1}.icon{width:48px;height:48px;display:grid;place-items:center;border-radius:14px;background:#e8f0fe;color:#1967d2;font-size:25px;margin-bottom:18px}.card:nth-child(2) .icon{background:#e6f4ea;color:#188038}.card:nth-child(3) .icon{background:#fef7e0;color:#b06000}.card:nth-child(4) .icon{background:#fce8e6;color:#c5221f}.card h3{font-size:20px;font-weight:500;margin:0 0 8px}.card p{color:var(--muted);font-size:14px;margin:0 0 20px}.more{margin-top:auto;color:#1967d2;font-size:14px;font-weight:500}.about{margin-top:48px;background:#fff;border:1px solid #e8eaed;border-radius:8px;padding:30px;display:grid;grid-template-columns:1.1fr .9fr;gap:34px;box-shadow:var(--shadow)}.about h2{font-weight:400;margin:0 0 10px}.about p{margin:0;color:var(--muted)}.chips{display:flex;flex-wrap:wrap;gap:8px}.chips span{background:#f1f3f4;border-radius:20px;padding:7px 12px;font-size:13px;color:#3c4043}footer{padding:24px max(5vw,22px);background:#fff;border-top:1px solid #eee;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}footer a{color:#1967d2;text-decoration:none}
+@media(max-width:760px){.top{height:auto;min-height:64px;align-items:flex-start;flex-direction:column;padding-top:14px;padding-bottom:14px;gap:10px}nav{gap:18px;flex-wrap:wrap}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.about{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.hero{padding-top:55px;padding-bottom:60px}}@media(max-width:480px){.cards{grid-template-columns:1fr}.hero h1{letter-spacing:-1.3px}.card{min-height:215px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style></head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="#top" aria-label="Timched home">
-      <span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-      <span>timched</span>
-    </a>
-    <nav aria-label="Main navigation">
-      <a href="#projects">Projects</a>
-      <a href="#about">About</a>
-      <a href="https://github.com/timched">GitHub</a>
-    </nav>
-  </header>
-
-  <section class="hero" id="top">
-    <div class="hero-inner">
-      <p class="eyebrow">Personal site · Projects · Experiments</p>
-      <h1>Hey, I'm Timched.</h1>
-      <p>I build things, experiment with technology, and explore the worlds of Linux, Android, and open-source software. This is my little corner of the internet.</p>
-      <a class="button" href="#projects">Explore my projects <span aria-hidden="true">→</span></a>
-    </div>
-  </section>
-
-  <main>
-    <section id="projects">
-      <div class="section-heading">
-        <h2>What I'm working on</h2>
-        <p>A few things from my workbench</p>
-      </div>
-      <div class="tiles">
-        <a class="tile t-blue" href="https://github.com/timched/JustCoin">
-          <span class="symbol" aria-hidden="true">◇</span>
-          <div><h3>JustCoin</h3><p>A Telegram bot project with a virtual currency and community features.</p></div>
-        </a>
-        <a class="tile t-purple" href="https://github.com/timched/PineconeMC-Debian">
-          <span class="symbol" aria-hidden="true">▧</span>
-          <div><h3>Linux &amp; Debian</h3><p>Linux experiments, desktop setups, and computer tinkering.</p></div>
-        </a>
-        <a class="tile t-green" href="https://github.com/timched">
-          <span class="symbol" aria-hidden="true">⌘</span>
-          <div><h3>Open source</h3><p>Browse my repositories, code, and ongoing experiments.</p></div>
-        </a>
-        <a class="tile t-orange" href="https://github.com/topics/android">
-          <span class="symbol" aria-hidden="true">▣</span>
-          <div><h3>Android lab</h3><p>Custom ROMs, AOSP, and learning how Android works.</p></div>
-        </a>
-        <a class="tile t-teal" href="https://github.com/timched?tab=repositories">
-          <span class="symbol" aria-hidden="true">＋</span>
-          <div><h3>More projects</h3><p>Small tools, ideas, and new things as they take shape.</p></div>
-        </a>
-        <a class="tile t-dark" href="https://github.com/timched">
-          <span class="symbol" aria-hidden="true">↗</span>
-          <div><h3>Find me on GitHub</h3><p>Follow along, check out the code, or say hello.</p></div>
-        </a>
-      </div>
-    </section>
-
-    <section class="about" id="about">
-      <div>
-        <h2>A bit about me</h2>
-        <p>I'm a tech enthusiast who enjoys figuring out how things work — from operating systems and phones to bots and websites. I like practical projects, retro interfaces, and open-source software.</p>
-      </div>
-      <div>
-        <h2>Things I like</h2>
-        <div class="chips" aria-label="Interests">
-          <span>Debian Linux</span><span>Android / AOSP</span><span>Python</span>
-          <span>Telegram bots</span><span>Web development</span><span>Retro UI</span>
-          <span>Open source</span>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <span>© <span id="year">2026</span> Timched. Built with HTML, CSS, and curiosity.</span>
-    <span><a href="https://github.com/timched">GitHub</a> · No trackers, no frameworks, just a static site.</span>
-  </footer>
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+<header class="top"><a class="brand" href="#top"><span class="gmark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>timched</span></a><nav aria-label="Main navigation"><a href="#projects">Projects</a><a href="#about">About</a><a href="https://github.com/timched">GitHub</a></nav></header>
+<section class="hero" id="top"><div class="hero-inner"><div class="kicker">A personal space on the web</div><h1>Ideas become<br>little experiments.</h1><p>Hi, I'm Timched. I tinker with Linux, Android, bots, and web projects. This is a home for the things I'm building and the things I'm learning.</p><div class="actions"><a class="btn primary" href="#projects">Explore projects <span aria-hidden="true">&nbsp;→</span></a><a class="btn secondary" href="https://github.com/timched">Visit GitHub</a></div></div></section>
+<main><section id="projects"><div class="section-head"><h2>Projects & experiments</h2><p>Made with curiosity, not a giant framework.</p></div><div class="cards">
+<a class="card" href="duckOS/"><div class="card-top"></div><div class="card-body"><div class="icon" aria-hidden="true">🦆</div><h3>duckOS</h3><p>A tiny macOS-inspired desktop environment that runs entirely in your browser. Try the windows, dock, and terminal.</p><span class="more">Launch demo →</span></div></a>
+<a class="card" href="https://github.com/timched/JustCoin"><div class="card-top"></div><div class="card-body"><div class="icon" aria-hidden="true">◇</div><h3>JustCoin</h3><p>A Telegram bot project with a virtual currency and community features.</p><span class="more">View project →</span></div></a>
+<a class="card" href="https://github.com/timched/PineconeMC-Debian"><div class="card-top"></div><div class="card-body"><div class="icon" aria-hidden="true">⌘</div><h3>Linux & Debian</h3><p>Desktop setups, Linux experiments, and computer tinkering.</p><span class="more">Explore repository →</span></div></a>
+<a class="card" href="https://github.com/topics/android"><div class="card-top"></div><div class="card-body"><div class="icon" aria-hidden="true">▣</div><h3>Android lab</h3><p>Custom ROMs, AOSP, and learning how Android works under the hood.</p><span class="more">Explore Android →</span></div></a>
+<a class="card" href="https://github.com/timched?tab=repositories"><div class="card-top"></div><div class="card-body"><div class="icon" aria-hidden="true">＋</div><h3>More experiments</h3><p>Small tools, new ideas, and projects as they take shape.</p><span class="more">Browse repositories →</span></div></a>
+<a class="card" href="https://github.com/timched"><div class="card-top"></div><div class="card-body"><div class="icon" aria-hidden="true">↗</div><h3>Open source</h3><p>Browse my code, follow along, or see what I'm learning next.</p><span class="more">Find me on GitHub →</span></div></a>
+</div></section>
+<section class="about" id="about"><div><h2>A bit about me</h2><p>I'm a tech enthusiast who enjoys figuring out how things work — from operating systems and phones to bots and websites. I like practical projects, retro interfaces, and open-source software.</p></div><div><h2>Things I like</h2><div class="chips"><span>Debian Linux</span><span>Android / AOSP</span><span>Python</span><span>Telegram bots</span><span>Web development</span><span>Retro UI</span><span>Open source</span></div></div></section></main>
+<footer><span>© <span id="year">2026</span> Timched · HTML, CSS, and curiosity.</span><span><a href="https://github.com/timched">GitHub</a> · No trackers, just a static site.</span></footer><script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+</body></html>
